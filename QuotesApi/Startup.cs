@@ -51,7 +51,7 @@ namespace QuotesApi
             // This is to tell the program that to create the database if not found
             // quotesDbContext.Database.EnsureCreated();
 
-            quotesDbContext.Database.Migrate();
+            //quotesDbContext.Database.Migrate(); // this is used to update the migration runtime
 
             app.UseMvc();
         }

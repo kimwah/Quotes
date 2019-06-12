@@ -1,0 +1,7 @@
+To add migration
+- Open the Package Manager Console and run command
+PM> Add-Migration QuoteTypeAdded
+
+PM> updata-database
+
+PM> remove-migration
