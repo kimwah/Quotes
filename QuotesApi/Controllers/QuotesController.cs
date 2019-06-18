@@ -27,14 +27,31 @@ namespace QuotesApi.Controllers
         //{
         //    return _quoteDbContext.Quotes;
         //}
-        public IActionResult Get()
+        public IActionResult Get(string sort)
         {
             //return BadRequest();
             //return NotFound();
-            return Ok(_quoteDbContext.Quotes);
             //return StatusCode(401);
             //return StatusCode(StatusCodes.Status200OK);
-   
+
+            //Adding sorting
+            IQueryable<Quote> quotes;
+            switch(sort)
+            {
+                case "desc":
+                    quotes = _quoteDbContext.Quotes.OrderByDescending(q => q.CreatedAt);
+                    break;
+                case "asc":
+                    quotes = _quoteDbContext.Quotes.OrderBy(q => q.CreatedAt);
+                    break;
+                default:
+                    quotes = _quoteDbContext.Quotes;
+                    break;
+            }
+
+
+            //return Ok(_quoteDbContext.Quotes);
+            return Ok(quotes);
         }
 
 
@@ -44,6 +61,13 @@ namespace QuotesApi.Controllers
         {
             var quote = _quoteDbContext.Quotes.Find(id);
             return quote;
+        }
+
+        // api/Quotes/Test/1
+        [HttpGet("[action]/{id}")]
+        public int Test(int id)
+        {
+            return id;
         }
 
         // POST: api/Quotes
@@ -69,6 +93,8 @@ namespace QuotesApi.Controllers
                 entity.Title = quote.Title;
                 entity.Author = quote.Author;
                 entity.Description = quote.Description;
+                entity.Type = quote.Type;
+                entity.CreatedAt = quote.CreatedAt;    
                 _quoteDbContext.SaveChanges();
                 return Ok("Record updated successfully");
             }

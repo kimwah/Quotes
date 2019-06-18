@@ -14,5 +14,6 @@ namespace QuotesApi.Data
 
         }
         public DbSet<Quote> Quotes { get; set; }
+        public DbSet<Supplier> Suppliers { get; set; }
     }
 }
